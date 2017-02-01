@@ -1,0 +1,9 @@
+apply plugin: 'application'
+apply plugin: 'kotlin'
+
+mainClassName = "ee.es.ExportMainKt"
+
+dependencies {
+    compile project(':ee-common')
+    compile "uy.klutter:klutter-elasticsearch-jdk7:$version_klutter"
+}
