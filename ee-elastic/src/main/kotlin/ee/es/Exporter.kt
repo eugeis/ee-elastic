@@ -2,13 +2,14 @@ package ee.es
 
 import org.elasticsearch.client.Client
 import org.elasticsearch.common.unit.TimeValue
+import org.elasticsearch.search.builder.SearchSourceBuilder
 import java.nio.file.Path
 
 class Exporter(val client: Client) {
     fun export(index: Array<String>, searchSource: String, targetPath: Path, fields: Array<String>, separator: String = " ") {
         val scroll = TimeValue(60000)
         var scrollResp = client.prepareSearch(*index)
-                .setSource(searchSource)
+                .setSource(SearchSourceBuilder.searchSource())
                 .setScroll(scroll)
                 .execute().actionGet()
 
