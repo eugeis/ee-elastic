@@ -45,10 +45,11 @@ open class Exporter(val client: Client) {
         val parser = XContentFactory.xContent(XContentType.JSON).
                 createParser(NamedXContentRegistry.EMPTY, searchSource)
 
-        val searchSourceBuilder = SearchSourceBuilder.searchSource()
+        //val searchSourceBuilder = SearchSourceBuilder.fromXContent()
         //AggregatorParsers aggParsers, Suggesters suggesters, SearchExtRegistry searchExtRegistry
-        searchSourceBuilder.parseXContent(
-                QueryParseContext(parser, ParseFieldMatcher.EMPTY), null, null, null)
-        return searchSourceBuilder
+        //searchSourceBuilder.parseXContent(
+        //        QueryParseContext(parser, ParseFieldMatcher.EMPTY), null, null, null)
+        //return searchSourceBuilder
+        return null
     }
 }
