@@ -7,6 +7,7 @@ import org.elasticsearch.common.xcontent.NamedXContentRegistry
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.common.xcontent.XContentType
 import org.elasticsearch.index.query.QueryParseContext
+import org.elasticsearch.search.aggregations.AggregatorParsers
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import java.nio.file.Path
 
@@ -42,14 +43,22 @@ open class Exporter(val client: Client) {
     }
 
     protected fun searchSourceBuilder(searchSource: String): SearchSourceBuilder? {
+
+        /*
+// from Map to XContent
+        XContentBuilder builder = ... // see above
+// from XContent to JSON
+        String json = new String(builder.getBytes(), "UTF-8");
+// use JSON to populate SearchSourceBuilder
+        JsonXContent parser = createParser(JsonXContent.jsonXContent, json));
+        sourceBuilder.parseXContent(new QueryParseContext(parser));
+        */
+
         val parser = XContentFactory.xContent(XContentType.JSON).
                 createParser(NamedXContentRegistry.EMPTY, searchSource)
-
-        //val searchSourceBuilder = SearchSourceBuilder.fromXContent()
-        //AggregatorParsers aggParsers, Suggesters suggesters, SearchExtRegistry searchExtRegistry
-        //searchSourceBuilder.parseXContent(
-        //        QueryParseContext(parser, ParseFieldMatcher.EMPTY), null, null, null)
-        //return searchSourceBuilder
+        val searchSourceBuilder = SearchSourceBuilder.fromXContent(
+                QueryParseContext(parser, ParseFieldMatcher.EMPTY), null, null, null)
+        return searchSourceBuilder
         return null
     }
 }

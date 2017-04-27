@@ -31,7 +31,7 @@ class ExportControllerTest {
         assertEquals(config, loadedConfig)
     }
 
-    @Ignore
+    //@Ignore
     @Test fun testExport() {
         val config = exportConfig()
 
