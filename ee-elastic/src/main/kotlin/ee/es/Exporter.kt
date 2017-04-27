@@ -8,7 +8,7 @@ class Exporter(val client: Client) {
     fun export(index: Array<String>, searchSource: String, targetPath: Path, fields: Array<String>, separator: String = " ") {
         val scroll = TimeValue(60000)
         var scrollResp = client.prepareSearch(*index)
-                .setSource(searchSource)
+                //.setSource(searchSource)
                 .setScroll(scroll)
                 .execute().actionGet()
 

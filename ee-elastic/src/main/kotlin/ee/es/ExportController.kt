@@ -19,9 +19,7 @@ class ExportController(val config: ExportConfig) {
     protected fun client(): Client {
         val addresses = ArrayList<InetSocketTransportAddress>()
         config.hosts.forEach { addresses.add(InetSocketTransportAddress(inetAddress(it), config.port)) }
-        ESLoggerFactory.getRootLogger().level = "ERROR"
         val client = esTransportClient(config.clusterName, addresses, config.settings)
-        ESLoggerFactory.getRootLogger().level = "ERROR"
         return client
     }
 
