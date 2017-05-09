@@ -1,13 +1,11 @@
 package ee.es
 
 import org.elasticsearch.client.Client
-import org.elasticsearch.common.ParseFieldMatcher
 import org.elasticsearch.common.unit.TimeValue
 import org.elasticsearch.common.xcontent.NamedXContentRegistry
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.common.xcontent.XContentType
 import org.elasticsearch.index.query.QueryParseContext
-import org.elasticsearch.search.aggregations.AggregatorParsers
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import java.nio.file.Path
 
@@ -56,8 +54,7 @@ open class Exporter(val client: Client) {
 
         val parser = XContentFactory.xContent(XContentType.JSON).
                 createParser(NamedXContentRegistry.EMPTY, searchSource)
-        val searchSourceBuilder = SearchSourceBuilder.fromXContent(
-                QueryParseContext(parser, ParseFieldMatcher.EMPTY), null, null, null)
+        val searchSourceBuilder = SearchSourceBuilder.fromXContent(QueryParseContext(parser))
         return searchSourceBuilder
         return null
     }
