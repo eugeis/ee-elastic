@@ -1,10 +1,14 @@
 package ee.es
 
-import ee.es.api.transportClient
 import org.elasticsearch.client.Client
+import org.elasticsearch.common.logging.ESLoggerFactory
+import org.elasticsearch.common.transport.InetSocketTransportAddress
+import uy.klutter.elasticsearch.esTransportClient
+import java.net.InetAddress
 import java.nio.file.Paths
+import java.util.*
 
-open class ExportController(val config: ExportConfig) {
+class ExportController(val config: ExportConfig) {
     fun export() {
         val client = client()
         val exporter = Exporter(client)
@@ -12,5 +16,12 @@ open class ExportController(val config: ExportConfig) {
         client.close()
     }
 
-    protected fun client(): Client = transportClient(config.clusterName, config.hosts, config.port, config.settings)
+    protected fun client(): Client {
+        val addresses = ArrayList<InetSocketTransportAddress>()
+        config.hosts.forEach { addresses.add(InetSocketTransportAddress(inetAddress(it), config.port)) }
+        val client = esTransportClient(config.clusterName, addresses, config.settings)
+        return client
+    }
+
+    private fun inetAddress(host: String) = InetAddress.getByName(host)
 }
