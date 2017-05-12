@@ -3,9 +3,7 @@ package ee.es
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import mbuhot.eskotlin.query.fulltext.match
 import mbuhot.eskotlin.query.fulltext.match_phrase
-import mbuhot.eskotlin.query.term.type
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.elasticsearch.search.sort.SortOrder
 import org.junit.Assert.assertEquals
@@ -31,7 +29,7 @@ class ExportControllerTest {
         assertEquals(config, loadedConfig)
     }
 
-    //@Ignore
+    @Ignore
     @Test fun testExport() {
         val config = exportConfig()
 
