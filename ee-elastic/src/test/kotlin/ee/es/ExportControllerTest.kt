@@ -29,7 +29,7 @@ class ExportControllerTest {
         assertEquals(config, loadedConfig)
     }
 
-    @Ignore
+    //@Ignore
     @Test fun testExport() {
         val config = exportConfig()
 
@@ -38,17 +38,20 @@ class ExportControllerTest {
     }
 
     private fun exportConfig(): ExportConfig {
-        val config = ExportConfig("D:/views/share/logs/tid1.log")
-        config.indexes = arrayOf("logstash-2016.09.02")
-        config.fields = arrayOf("logdate", "sequence", "type", "level", "logger", "dur", "kind", "message")
+        val config = ExportConfig("D:/TC_CACHE/logs/export/tid1.log")
+        config.indexes = arrayOf("logstash-2017.05.18")
+        config.fields = arrayOf("logdate", "type", "level", "logger", "dur", "kind", "message")
 
-        val thread: String = "tid=0:ffffc164a801:-69feb870:57c82412:4e586${'$'}u=anonymous"
+        val thread: String = "0:ffff0a7f642d:912b6af:591c0cff:207dff"
         config.searchSource = SearchSourceBuilder.searchSource().query(
                 match_phrase {
                     "thread" to { query = thread }
                 }).sort("@logdate", SortOrder.ASC).sort("sequence", SortOrder.ASC).toString()
+
+        println(config.searchSource)
+
         return config
     }
 
-    private fun exportConfigFile() = File("D:/views/share/logs/exportConfig.json")
+    private fun exportConfigFile() = File("D:/TC_CACHE/logs/export/exportConfig.json")
 }
