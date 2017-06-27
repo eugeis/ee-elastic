@@ -1,6 +1,8 @@
 package ee.es
 
 import org.elasticsearch.client.Client
+import org.elasticsearch.cluster.ClusterModule
+import org.elasticsearch.common.network.NetworkModule
 import org.elasticsearch.common.unit.TimeValue
 import org.elasticsearch.common.xcontent.NamedXContentRegistry
 import org.elasticsearch.common.xcontent.XContentFactory
@@ -40,7 +42,7 @@ open class Exporter(val client: Client) {
         client.close()
     }
 
-    protected fun searchSourceBuilder(searchSource: String): SearchSourceBuilder? {
+    protected fun searchSourceBuilder(searchSource: String): SearchSourceBuilder {
 
         /*
 // from Map to XContent
@@ -52,10 +54,13 @@ open class Exporter(val client: Client) {
         sourceBuilder.parseXContent(new QueryParseContext(parser));
         */
 
-        val parser = XContentFactory.xContent(XContentType.JSON).
-                createParser(NamedXContentRegistry.EMPTY, searchSource)
+        val parser = XContentFactory.xContent(XContentType.JSON).createParser(namedXContentRegistry(), searchSource)
         val searchSourceBuilder = SearchSourceBuilder.fromXContent(QueryParseContext(parser))
         return searchSourceBuilder
-        return null
+    }
+
+    private fun namedXContentRegistry(): NamedXContentRegistry {
+        //return NamedXContentRegistry(NetworkModule.getNamedXContents())
+        return NamedXContentRegistry(ClusterModule.getNamedXWriteables())
     }
 }
