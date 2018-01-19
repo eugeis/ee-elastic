@@ -15,12 +15,10 @@ fun transportClient(clusterName: String, nodes: Collection<TransportAddress>, se
     }
 }
 
-fun transportClient(clusterName: String, nodes: Collection<TransportAddress>, init: Settings.Builder.() -> Unit): Client {
-    val settings = Settings.builder()
-            .put("cluster.name", clusterName)
-            .put("client.transport.sniff", false)
-            .apply(init)
-            .build()
+fun transportClient(clusterName: String, nodes: Collection<TransportAddress>,
+    init: Settings.Builder.() -> Unit): Client {
+    val settings =
+        Settings.builder().put("cluster.name", clusterName).put("client.transport.sniff", false).apply(init).build()
     val client = PreBuiltTransportClient(settings)
     nodes.forEach {
         client.addTransportAddress(it)
@@ -32,6 +30,7 @@ fun transportClient(clusterName: String, hosts: Collection<String>, port: Int, s
     return transportClient(clusterName, hosts.map { TransportAddress(it.toInetAddress(), port) }, settings)
 }
 
-fun transportClient(clusterName: String, hosts: Collection<String>, port: Int, init: Settings.Builder.() -> Unit): Client {
+fun transportClient(clusterName: String, hosts: Collection<String>, port: Int,
+    init: Settings.Builder.() -> Unit): Client {
     return transportClient(clusterName, hosts.map { TransportAddress(it.toInetAddress(), port) }, init)
 }

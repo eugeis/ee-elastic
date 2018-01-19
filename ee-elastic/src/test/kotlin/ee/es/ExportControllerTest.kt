@@ -3,7 +3,6 @@ package ee.es
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import mbuhot.eskotlin.query.fulltext.match_phrase
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.elasticsearch.search.sort.SortOrder
 import org.junit.Assert.assertEquals
@@ -14,7 +13,8 @@ import java.io.File
 class ExportControllerTest {
 
     @Ignore
-    @Test fun testWriteExportConfig() {
+    @Test
+    fun testWriteExportConfig() {
         val config = exportConfig()
         val objectMapper: ObjectMapper = jacksonObjectMapper()
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -22,7 +22,8 @@ class ExportControllerTest {
     }
 
     @Ignore
-    @Test fun testReadExportConfig() {
+    @Test
+    fun testReadExportConfig() {
         val config = exportConfig()
         val objectMapper: ObjectMapper = jacksonObjectMapper()
         val loadedConfig = objectMapper.readValue(exportConfigFile(), ExportConfig::class.java)
@@ -30,7 +31,8 @@ class ExportControllerTest {
     }
 
     //@Ignore
-    @Test fun testExport() {
+    @Test
+    fun testExport() {
         val config = exportConfig()
 
         val controller = ExportController(config)
@@ -43,10 +45,9 @@ class ExportControllerTest {
         config.fields = arrayOf("logdate", "type", "level", "logger", "dur", "kind", "message")
 
         val thread: String = "0:ffff0a7f642d:912b6af:591c0cff:207dff"
-        config.searchSource = SearchSourceBuilder.searchSource().query(
-                match_phrase {
-                    "thread" to { query = thread }
-                }).sort("@logdate", SortOrder.ASC).sort("sequence", SortOrder.ASC).toString()
+        config.searchSource = SearchSourceBuilder.searchSource().query(match_phrase {
+            "thread" to { query = thread }
+        }).sort("@logdate", SortOrder.ASC).sort("sequence", SortOrder.ASC).toString()
 
         println(config.searchSource)
 

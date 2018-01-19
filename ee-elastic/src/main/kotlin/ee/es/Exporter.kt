@@ -10,13 +10,13 @@ import org.elasticsearch.search.builder.SearchSourceBuilder
 import java.nio.file.Path
 
 open class Exporter(val client: Client) {
-    fun export(index: Array<String>, searchSource: String, targetPath: Path, fields: Array<String>, separator: String = " ") {
+    fun export(index: Array<String>, searchSource: String, targetPath: Path, fields: Array<String>,
+        separator: String = " ") {
 
         val scroll = TimeValue(60000)
-        var scrollResp = client.prepareSearch(*index)
-                .setSource(searchSourceBuilder(searchSource))
-                .setScroll(scroll)
-                .execute().actionGet()
+        var scrollResp =
+            client.prepareSearch(*index).setSource(searchSourceBuilder(searchSource)).setScroll(scroll).execute()
+                .actionGet()
 
         targetPath.toFile().bufferedWriter().use { out ->
             println("Export started to $targetPath, please wait...")
@@ -53,7 +53,7 @@ open class Exporter(val client: Client) {
         */
 
         val parser = XContentFactory.xContent(XContentType.JSON).createParser(namedXContentRegistry(), searchSource)
-        val searchSourceBuilder = SearchSourceBuilder.fromXContent(null)//QueryParseContext(parser)
+        val searchSourceBuilder = SearchSourceBuilder.fromXContent(null) //QueryParseContext(parser)
         return searchSourceBuilder
     }
 
