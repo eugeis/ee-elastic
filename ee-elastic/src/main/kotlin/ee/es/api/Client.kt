@@ -3,7 +3,6 @@ package ee.es.api
 import ee.common.ext.toInetAddress
 import org.elasticsearch.client.Client
 import org.elasticsearch.common.settings.Settings
-import org.elasticsearch.common.transport.InetSocketTransportAddress
 import org.elasticsearch.common.transport.TransportAddress
 import org.elasticsearch.transport.client.PreBuiltTransportClient
 
@@ -30,9 +29,9 @@ fun transportClient(clusterName: String, nodes: Collection<TransportAddress>, in
 }
 
 fun transportClient(clusterName: String, hosts: Collection<String>, port: Int, settings: Map<String, String>): Client {
-    return transportClient(clusterName, hosts.map { InetSocketTransportAddress(it.toInetAddress(), port) }, settings)
+    return transportClient(clusterName, hosts.map { TransportAddress(it.toInetAddress(), port) }, settings)
 }
 
 fun transportClient(clusterName: String, hosts: Collection<String>, port: Int, init: Settings.Builder.() -> Unit): Client {
-    return transportClient(clusterName, hosts.map { InetSocketTransportAddress(it.toInetAddress(), port) }, init)
+    return transportClient(clusterName, hosts.map { TransportAddress(it.toInetAddress(), port) }, init)
 }
