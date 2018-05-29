@@ -45,12 +45,12 @@ class ExportControllerTest {
         config.fields = arrayOf("logdate", "type", "level", "logger", "dur", "kind", "message")
 
         val thread: String = "0:ffff0a7f642d:912b6af:591c0cff:207dff"
-        config.searchSource = SearchSourceBuilder.searchSource().query(match_phrase {
+        /*config.searchSource = SearchSourceBuilder.searchSource().query(match_phrase {
             "thread" to { query = thread }
         }).sort("@logdate", SortOrder.ASC).sort("sequence", SortOrder.ASC).toString()
 
         println(config.searchSource)
-
+        */
         return config
     }
 
