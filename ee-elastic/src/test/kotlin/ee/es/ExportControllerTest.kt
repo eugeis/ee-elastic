@@ -3,16 +3,14 @@ package ee.es
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import org.elasticsearch.search.builder.SearchSourceBuilder
-import org.elasticsearch.search.sort.SortOrder
-import org.junit.Assert.assertEquals
-import org.junit.Ignore
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 import java.io.File
 
 class ExportControllerTest {
 
-    @Ignore
+    @Disabled
     @Test
     fun testWriteExportConfig() {
         val config = exportConfig()
@@ -21,7 +19,7 @@ class ExportControllerTest {
         objectMapper.writeValue(exportConfigFile(), config)
     }
 
-    @Ignore
+    @Disabled
     @Test
     fun testReadExportConfig() {
         val config = exportConfig()
@@ -30,7 +28,7 @@ class ExportControllerTest {
         assertEquals(config, loadedConfig)
     }
 
-    //@Ignore
+    //@Disabled
     @Test
     fun testExport() {
         val config = exportConfig()
