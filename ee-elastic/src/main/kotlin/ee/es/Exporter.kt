@@ -52,7 +52,7 @@ open class Exporter(val client: Client) {
         sourceBuilder.parseXContent(new QueryParseContext(parser));
         */
 
-        val parser = XContentFactory.xContent(XContentType.JSON).createParser(namedXContentRegistry(), searchSource)
+        //val parser = XContentFactory.xContent(XContentType.JSON).createParser(namedXContentRegistry(), searchSource)
         val searchSourceBuilder = SearchSourceBuilder.fromXContent(null) //QueryParseContext(parser)
         return searchSourceBuilder
     }
