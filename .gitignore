@@ -18,3 +18,4 @@ gradle-app.setting
 /**/*.iml
 /build.gradle
 /ee-elastic/out/
+/.gradle/
