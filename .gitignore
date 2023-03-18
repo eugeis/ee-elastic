@@ -19,3 +19,8 @@ gradle-app.setting
 /build.gradle
 /ee-elastic/out/
 /.gradle/
+/.settings/
+/.classpath
+/ee-elastic/.settings/
+/ee-elastic/.classpath
+/ee-elastic/.project
